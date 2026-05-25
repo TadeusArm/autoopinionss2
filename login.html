@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AutoOpinions</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.jpg">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body { background: url('assets/img/fondo_coche.jpg') center/cover no-repeat fixed; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="card">
+        <h2 class="text-center">AUTO OPINIONS</h2>
+        <p class="subtitle text-center">Inicia sesión para continuar</p>
+
+        <div id="alert-container"></div>
+
+        <form id="login-form">
+            <div class="input-group">
+                <input type="text" id="login_input" name="login_input" placeholder="Usuario o correo electrónico" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+            </div>
+            <button type="submit" class="btn-submit">Entrar</button>
+        </form>
+
+        <p class="text-footer">
+            ¿Eres nuevo? <a href="register.html">Crea una cuenta</a>
+        </p>
+    </div>
+
+    <script src="assets/js/login.js"></script>
+</body>
+</html>

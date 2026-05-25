@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - AutoOpinions</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body { background: url('assets/img/editarperfil.jpg') center/cover no-repeat fixed; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div id="global-header-container" style="position: sticky; top: 0; z-index: 1000; min-height: 83px;"></div>
+
+    <div class="edit-container">
+        <div class="card-profile">
+            <form id="edit-profile-form" enctype="multipart/form-data">
+
+                <!-- Avatar -->
+                <div class="profile-header">
+                    <div class="avatar-picker">
+                        <div class="profile-avatar-big" id="avatar-preview">
+                            <span id="avatar-placeholder">?</span>
+                        </div>
+                        <label for="file-input" class="change-pic-btn" title="Cambiar foto">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
+                        </label>
+                        <input id="file-input" type="file" name="profile_pic" accept="image/*">
+                    </div>
+                    <h2 id="profile-username" style="margin: 0; font-weight: 300; letter-spacing: 1px;"></h2>
+                    <p id="profile-email" style="color: #64748b; font-size: 0.8rem; margin-top: 5px;"></p>
+                </div>
+
+                <!-- Alertas -->
+                <div id="alert-container"></div>
+
+                <!-- Campos -->
+                <div class="form-group">
+                    <label>Nombre de usuario</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ubicación</label>
+                        <input type="text" id="location" name="location" placeholder="Barcelona, ES">
+                    </div>
+                    <div class="form-group">
+                        <label>Instagram</label>
+                        <input type="text" id="instagram_user" name="instagram_user" placeholder="@usuario">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Biografía</label>
+                    <textarea id="bio" name="bio" rows="3" placeholder="Cuéntanos algo sobre ti y tus coches..."></textarea>
+                </div>
+
+                <a href="change_password.html" class="btn-link-sec">Cambiar contraseña</a>
+
+                <button type="submit" class="btn-submit">Guardar Perfil</button>
+
+                <div class="logout-section">
+                    <a href="#" id="btn-logout" class="btn-logout">Cerrar sesión</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/edit_profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoOpinions - Perfil</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.jpg">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body { background: url('assets/img/fondoperfiles.jpg') center/cover no-repeat fixed !important; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <header class="nav-header">
+        <div class="header-container">
+            <div class="nav-left">
+                <a href="index.html" class="nav-logo">Auto Opinions</a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Inicio</a>
+                <a href="add_vehicle.html">Publicar</a>
+                <a href="following_feed.html">Siguiendo</a>
+            </nav>
+            <div class="nav-right" id="nav-profile-container"></div>
+        </div>
+    </header>
+
+    <div class="perfil-wrapper">
+        <div class="card-perfil-header" id="profile-card-header">
+            <p style="color: #cbd5e1;">Cargando datos de usuario...</p>
+        </div>
+
+        <h3 id="garage-title" style="margin-bottom: 25px; font-size: 1.2rem; font-weight: 700; color: #fff;">
+            Garaje
+        </h3>
+
+        <div class="grid-publicaciones" id="user-vehicles-grid"></div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/profile.js"></script>
+</body>
+</html>

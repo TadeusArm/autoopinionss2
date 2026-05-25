@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Vehículo - AutoOpinions</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.jpg">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-add-vehicle">
+    <div class="overlay"></div>
+
+    <div id="global-header-container" style="position: sticky; top: 0; z-index: 1000; min-height: 83px;"></div>
+
+    <div class="add-vehicle-container">
+        <div class="add-vehicle-card">
+
+            <div class="add-vehicle-header">
+                <h1 class="add-vehicle-title">Editar <b>Vehículo</b></h1>
+            </div>
+
+            <div id="alert-container"></div>
+
+            <form id="edit-vehicle-form" enctype="multipart/form-data">
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <span class="label-text">Marca</span>
+                        <input type="text" id="brand" name="brand" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="label-text">Modelo</span>
+                        <input type="text" id="model" name="model" required>
+                    </div>
+                </div>
+
+                <div class="form-row-3">
+                    <div class="input-group">
+                        <span class="label-text">Año</span>
+                        <input type="number" id="year" name="year" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="label-text">Kilómetros</span>
+                        <input type="number" id="km" name="km" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="label-text">Potencia (CV)</span>
+                        <input type="number" id="potencia_cv" name="potencia_cv" min="1" max="2000">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <span class="label-text">Descripción</span>
+                    <textarea id="description" name="description" rows="4" placeholder="Cuéntanos algo sobre esta joya..."></textarea>
+                </div>
+
+                <div class="input-group">
+                    <span class="label-text">Imagen (dejar vacío para mantener la actual)</span>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+
+                <button type="submit" class="btn-submit">Guardar cambios</button>
+                <a id="cancel-link" href="index.html" class="add-vehicle-cancel">Cancelar y volver</a>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/edit_vehicle.js"></script>
+</body>
+</html>

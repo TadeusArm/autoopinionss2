@@ -1,67 +1,54 @@
 <?php
 session_start();
-include 'config/db.php';
-$message = "";
+include '../config/db.php';
+
+// Establecer cabecera para respuesta de la API
+header('Content-Type: application/json; charset=UTF-8');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $login_input = $_POST['login_input'];
-    $password = $_POST['password'];
+    
+    // Captura segura de las variables POST
+    $login_input = $_POST['login_input'] ?? '';
+    $password = $_POST['password'] ?? '';
 
-    $stmt = $pdo->prepare("SELECT id, username, password, profile_pic, role, verified FROM users WHERE email = ? OR username = ?");
-    $stmt->execute([$login_input, $login_input]);
-    $user = $stmt->fetch();
+    // Validación de integridad de datos recibidos
+    if (empty($login_input) || empty($password)) {
+        echo json_encode(['success' => false, 'message' => 'Error: Todos los campos son obligatorios.']);
+        exit;
+    }
 
-    if($user && password_verify($password, $user['password'])){
-        if($user['verified'] == 0) {
-            $message = "Error: Debes confirmar tu cuenta por correo antes de entrar.";
+    try {
+        $stmt = $pdo->prepare("SELECT id, username, password, profile_pic, role, verified FROM users WHERE email = ? OR username = ?");
+        $stmt->execute([$login_input, $login_input]);
+        $user = $stmt->fetch();
+
+        // Verificación de credenciales
+        if ($user && password_verify($password, $user['password'])) {
+            
+            // Verificación de estado de cuenta
+            if ($user['verified'] == 0) {
+                echo json_encode(['success' => false, 'message' => 'Error: Debes confirmar tu cuenta por correo antes de entrar.']);
+                exit;
+            } else {
+                // Asignación de variables de sesión
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['profile_pic'] = $user['profile_pic'];
+                $_SESSION['role'] = $user['role'];
+                
+                echo json_encode(['success' => true, 'message' => 'Login exitoso.']);
+                exit;
+            }
         } else {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['profile_pic'] = $user['profile_pic'];
-            $_SESSION['role'] = $user['role'];
-           
-            header("Location: index.php");
+            echo json_encode(['success' => false, 'message' => 'Usuario o contraseña incorrectos']);
             exit;
         }
-    } else {
-        $message = "Usuario o contraseña incorrectos";
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Error de procesamiento en el servidor.']);
+        exit;
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Método de solicitud no permitido.']);
+    exit;
 }
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - AutoOpinions</title>
-    <link rel="icon" type="image/png" href="assets/img/favicon.jpg">
-    <link rel="icon" type="image/png" href="assets/img/favicon.png"> <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <div class="overlay"></div>
-    <div class="card">
-        <h2 class="text-center">AUTO OPINIONS</h2>
-        <p class="subtitle text-center">Inicia sesión para continuar</p>
-
-        <?php if($message): ?>
-            <div class="alert alert-error">
-                <?php echo $message; ?>
-            </div>
-        <?php endif; ?>
-
-        <form method="POST">
-            <div class="input-group">
-                <input type="text" name="login_input" placeholder="Usuario o correo electrónico" required>
-            </div>
-            <div class="input-group">
-                <input type="password" name="password" placeholder="Contraseña" required>
-            </div>
-            <button type="submit" class="btn-submit">Entrar</button>
-        </form>
-       
-        <p class="text-footer">
-            ¿Eres nuevo? <a href="register.php">Crea una cuenta</a>
-        </p>
-    </div>
-</body>
-</html>
