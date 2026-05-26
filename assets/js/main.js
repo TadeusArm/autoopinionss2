@@ -4,11 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     inicializarHeader();
 });
 
-// ─── HEADER ──────────────────────────────────────────────────────────────────
-// Soporta dos modos:
-//   1. #global-header-container  → index.html (inyecta el <header> completo)
-//   2. #nav-profile-container    → resto de páginas (solo inyecta la pastilla de perfil)
-
 function inicializarHeader() {
     fetch('/backend/api/get_session.php')
         .then(r => {
@@ -20,8 +15,8 @@ function inicializarHeader() {
             const user = data.user;
 
             // Avatar
-            const nombrePic  = user.profile_pic ? user.profile_pic.split('/').pop() : null;
-            const rutaAvatar  = nombrePic ? `/assets/img/avatars/${nombrePic}` : null;
+            const nombrePic    = user.profile_pic ? user.profile_pic.split('/').pop() : null;
+            const rutaAvatar   = nombrePic ? `/assets/img/avatars/${nombrePic}` : null;
             const bloqueAvatar = rutaAvatar
                 ? `<img src="${rutaAvatar}" alt="Avatar" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`
                 : `<span style="font-size:0.9rem;">${escapeHtmlGlobal(user.username).charAt(0).toUpperCase()}</span>`;
@@ -32,13 +27,19 @@ function inicializarHeader() {
                     <div class="user-avatar-small">${bloqueAvatar}</div>
                 </a>`;
 
-            // Modo 1: header completo (index.html)
+            // Botón admin — solo si es admin
+            const btnAdmin = user.role === 'admin'
+                ? `<a href="admin.html" class="nav-admin-link">Admin</a>`
+                : '';
+
+            // Modo 1: header completo (#global-header-container)
             const globalContainer = document.getElementById('global-header-container');
             if (globalContainer) {
-                const pag         = window.location.pathname.split('/').pop() || 'index.html';
-                const activeInicio    = (pag === 'index.html'          || pag === '') ? 'active' : '';
-                const activeSiguiendo = (pag === 'following_feed.html')               ? 'active' : '';
-                const activePublicar  = (pag === 'add_vehicle.html')                  ? 'active' : '';
+                const pag             = window.location.pathname.split('/').pop() || 'index.html';
+                const activeInicio    = (pag === 'index.html' || pag === '') ? 'active' : '';
+                const activeSiguiendo = pag === 'following_feed.html'        ? 'active' : '';
+                const activePublicar  = pag === 'add_vehicle.html'           ? 'active' : '';
+                const activeAdmin     = (pag === 'admin.html' || pag === 'admin_dashboard.html') ? 'active' : '';
 
                 globalContainer.innerHTML = `
                     <header class="nav-header">
@@ -50,6 +51,7 @@ function inicializarHeader() {
                                 <a href="index.html"          class="${activeInicio}">Inicio</a>
                                 <a href="following_feed.html" class="${activeSiguiendo}">Siguiendo</a>
                                 <a href="add_vehicle.html"    class="${activePublicar}">Publicar</a>
+                                ${user.role === 'admin' ? `<a href="admin.html" class="nav-admin-link ${activeAdmin}">Admin</a>` : ''}
                             </nav>
                             <div class="nav-right">${pastillaPerfil}</div>
                         </div>
@@ -57,7 +59,7 @@ function inicializarHeader() {
                 return;
             }
 
-            // Modo 2: solo pastilla (resto de páginas)
+            // Modo 2: solo pastilla (#nav-profile-container)
             const navContainer = document.getElementById('nav-profile-container');
             if (navContainer) {
                 navContainer.innerHTML = pastillaPerfil;
@@ -81,7 +83,6 @@ function inicializarHeader() {
                     </header>`;
             }
 
-            // Redirigir a login solo desde páginas que no gestionan su propia sesión
             const pag = window.location.pathname.split('/').pop() || 'index.html';
             const sinRedireccion = ['login.html', 'register.html', 'comments.html', 'profile.html', 'change_password.html'];
             if (!sinRedireccion.some(p => pag.includes(p))) {
@@ -90,12 +91,11 @@ function inicializarHeader() {
         });
 }
 
-// Llamada desde otros JS (profile.js, comments.js) para actualizar solo la pastilla
 function actualizarMenuNavbar(userHeader) {
     if (!userHeader) return;
 
-    const nombrePic   = userHeader.profile_pic ? userHeader.profile_pic.split('/').pop() : null;
-    const rutaAvatar  = nombrePic ? `/assets/img/avatars/${nombrePic}` : null;
+    const nombrePic    = userHeader.profile_pic ? userHeader.profile_pic.split('/').pop() : null;
+    const rutaAvatar   = nombrePic ? `/assets/img/avatars/${nombrePic}` : null;
     const bloqueAvatar = rutaAvatar
         ? `<img src="${rutaAvatar}" alt="Avatar" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`
         : `<span style="font-size:0.9rem;">${escapeHtmlGlobal(userHeader.username || 'U').charAt(0).toUpperCase()}</span>`;

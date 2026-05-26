@@ -70,7 +70,7 @@ function cargarPerfil(perfilId) {
                    </div>`
                 : '';
 
-            // 4. INSTAGRAM — solo logo con gradiente oficial
+            // 4. INSTAGRAM 
             const igHtml = prof.instagram_user
                 ? `<div style="margin-top:8px;">
                        <a href="https://instagram.com/${escapeHTML(prof.instagram_user)}" target="_blank" rel="noopener noreferrer"

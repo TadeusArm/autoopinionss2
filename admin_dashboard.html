@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor de Sistema - AutoOpinions</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.jpg">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-admin-dashboard">
+    <div class="overlay" style="pointer-events: none;"></div>
+
+    <div id="global-header-container" style="position: sticky; top: 0; z-index: 1000; min-height: 83px;"></div>
+
+    <div class="dashboard-overlay">
+        <div class="dashboard-container">
+
+            <header class="dashboard-header">
+                <h1 class="dashboard-title">Monitor <b>System</b></h1>
+                <div class="dashboard-online">ONLINE</div>
+            </header>
+
+            <div class="top-stats-layout">
+                <div class="grid-main-stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="stat-usuarios">—</span>
+                        <span class="stat-label">Usuarios</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="stat-publis">—</span>
+                        <span class="stat-label">Publicaciones</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="stat-comments">—</span>
+                        <span class="stat-label">Feedback</span>
+                    </div>
+                </div>
+
+                <div class="pills-container">
+                    <div class="user-pill">
+                        <small>Más antiguo</small>
+                        <strong id="pill-primero">—</strong>
+                    </div>
+                    <div class="user-pill">
+                        <small>Más nuevo</small>
+                        <strong id="pill-ultimo">—</strong>
+                    </div>
+                    <div class="user-pill">
+                        <small>Más activo</small>
+                        <strong id="pill-activo">—</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-chart-section">
+                <div class="chart-title" id="chart-title">Actividad Mensual</div>
+                <div style="height:300px; width:100%; position:relative;">
+                    <canvas id="bigMonthlyChart"></canvas>
+                </div>
+                <div style="margin-top:30px; text-align:center;">
+                    <a href="admin.html" class="btn-volver-admin">
+                        Volver a Gestión de Usuarios
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/admin_dashboard.js"></script>
+</body>
+</html>

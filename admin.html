@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - AutoOpinions</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/img/favicon.jpg">
+</head>
+<body class="bg-admin">
+    <div class="overlay" style="pointer-events: none;"></div>
 
+    <div id="global-header-container" style="position: sticky; top: 0; z-index: 1000; min-height: 83px;"></div>
+
+    <div class="admin-overlay">
+        <div class="glass-panel">
+
+            <div class="admin-header">
+                <h1>Panel de Gestión de Usuarios</h1>
+                <p style="color:#9ca3af; margin-top:10px;">Administra los privilegios y la comunidad de AutoOpinions</p>
+            </div>
+
+            <div id="alert-container"></div>
+
+            <div class="table-container">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Rango</th>
+                            <th style="text-align:right;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-tbody">
+                        <tr><td colspan="4" style="text-align:center; color:#94a3b8;">Cargando usuarios...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top:40px; text-align:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:30px;">
+                <a href="admin_dashboard.html" class="btn-admin-dashboard">
+                    Ver Análisis del Sistema
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>
