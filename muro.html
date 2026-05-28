@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>AutoOpinions - Muro</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.jpg">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body { background: url('assets/img/fondo-index.jpg') center/cover no-repeat fixed; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div id="global-header-container" style="position: sticky; top: 0; z-index: 1000; min-height: 83px;"></div>
+
+    <aside class="sidebar-left">
+        <h4>Filtros Avanzados</h4>
+        <form id="filter-form">
+            <div class="filter-group">
+                <label>Buscar</label>
+                <input type="text" id="search-input" placeholder="Marca o modelo...">
+            </div>
+
+            <div class="filter-group">
+                <label>Marca</label>
+                <select id="brand-select">
+                    <option value="">Todas</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Año (Mín - Máx)</label>
+                <div class="range-container">
+                    <select id="min-year"></select>
+                    <select id="max-year"></select>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Kilómetros (Mín - Máx)</label>
+                <div class="range-container">
+                    <select id="min-km"></select>
+                    <select id="max-km"></select>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Potencia (CV) (Mín - Máx)</label>
+                <div class="range-container">
+                    <select id="min-cv"></select>
+                    <select id="max-cv"></select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-filter">ACTUALIZAR</button>
+            <a href="muro.html" id="btn-clear-filters" style="display:block; text-align:center; margin-top:15px; color:#64748b; font-size:0.75rem; text-decoration:none;">Limpiar filtros</a>
+        </form>
+    </aside>
+
+    <div class="feed-container" style="position: relative; z-index: 2;">
+        <h2 style="border-left: 5px solid #3b82f6; padding-left: 15px; margin-bottom: 25px; text-shadow: 2px 2px 5px rgba(0,0,0,0.7); font-size: 1.6rem; color: #fff; margin-top: 0;">
+            Muro de la Comunidad
+        </h2>
+
+        <div id="vehicles-timeline" style="width: 100%;"></div>
+    </div>
+
+    <button type="button" id="scrollToTop" title="Ir arriba"></button>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/index.js"></script>
+</body>
+</html>

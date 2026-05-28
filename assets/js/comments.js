@@ -1,15 +1,16 @@
+// assets/js/comments.js
+
 document.addEventListener("DOMContentLoaded", () => {
     const params    = new URLSearchParams(window.location.search);
     const vehicleId = params.get('vehicle_id');
 
     if (!vehicleId || isNaN(vehicleId)) {
-        window.location.href = 'index.html';
+        window.location.href = 'muro.html';
         return;
     }
 
     cargarPagina(vehicleId);
 
-    // Si viene con #leer en la URL, hacer scroll tras cargar
     if (window.location.hash === '#leer') {
         setTimeout(() => {
             document.getElementById('leer')?.scrollIntoView({ behavior: 'smooth' });
@@ -17,19 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// ─── CARGA PRINCIPAL ────────────────────────────────────────────────────────
-
 async function cargarPagina(vehicleId) {
     try {
         const res  = await fetch(`/backend/api/comments.php?vehicle_id=${vehicleId}`);
         const data = await res.json();
 
         if (!data.success) {
-            window.location.href = 'index.html';
+            window.location.href = 'muro.html';
             return;
         }
 
-        // Navbar
         if (typeof actualizarMenuNavbar === 'function') {
             actualizarMenuNavbar(data.user_header);
         }
@@ -42,8 +40,6 @@ async function cargarPagina(vehicleId) {
         console.error("Error al cargar la página de comentarios:", err);
     }
 }
-
-// ─── RENDER COCHE INFO ───────────────────────────────────────────────────────
 
 function renderCocheInfo(coche) {
     const srcImg = coche.image
@@ -61,8 +57,6 @@ function renderCocheInfo(coche) {
             </div>
         </div>`;
 }
-
-// ─── RENDER FORMULARIO ───────────────────────────────────────────────────────
 
 function renderFormulario(coche, yaOpinó, vehicleId) {
     const bloque = document.getElementById('bloque-form');
@@ -87,8 +81,6 @@ function renderFormulario(coche, yaOpinó, vehicleId) {
             Publicar Opinión
         </button>`;
 }
-
-// ─── RENDER COMENTARIOS ──────────────────────────────────────────────────────
 
 function renderComentarios(lista, vehicleId) {
     const contenedor = document.getElementById('lista-comentarios');
@@ -137,8 +129,6 @@ function renderComentarios(lista, vehicleId) {
     }).join('');
 }
 
-// ─── ENVIAR OPINIÓN PRINCIPAL ────────────────────────────────────────────────
-
 async function enviarOpinion(vehicleId) {
     const nota       = document.querySelector('input[name="nota"]:checked')?.value;
     const comentario = document.getElementById('comentario-principal')?.value.trim();
@@ -157,10 +147,8 @@ async function enviarOpinion(vehicleId) {
         const res  = await fetch('/backend/api/comments.php', { method: 'POST', body: fd });
         const data = await res.json();
 
-       if (data.success) {
-    setTimeout(() => {
-        window.location.reload();
-    }, 300);
+        if (data.success) {
+            setTimeout(() => window.location.reload(), 300);
         } else {
             mostrarAlertaForm(data.message || "Error al publicar.", "error");
         }
@@ -170,11 +158,8 @@ async function enviarOpinion(vehicleId) {
     }
 }
 
-// ─── ENVIAR RESPUESTA ────────────────────────────────────────────────────────
-
 async function enviarRespuesta(parentId, vehicleId) {
     const comentario = document.getElementById(`textarea-${parentId}`)?.value.trim();
-
     if (!comentario) return;
 
     try {
@@ -187,9 +172,7 @@ async function enviarRespuesta(parentId, vehicleId) {
         const data = await res.json();
 
         if (data.success) {
-    setTimeout(() => {
-        window.location.reload();
-    }, 300);
+            setTimeout(() => window.location.reload(), 300);
         } else {
             alert(data.message || "Error al enviar la respuesta.");
         }
@@ -198,10 +181,7 @@ async function enviarRespuesta(parentId, vehicleId) {
     }
 }
 
-// ─── TOGGLE REPLY ────────────────────────────────────────────────────────────
-
 function toggleReply(id, author, text) {
-    // Cerrar todos los formularios abiertos
     document.querySelectorAll('.form-respuesta').forEach(f => f.style.display = 'none');
 
     const form    = document.getElementById(`form-${id}`);
@@ -216,8 +196,6 @@ function toggleReply(id, author, text) {
     document.getElementById(`textarea-${id}`)?.focus();
 }
 
-// ─── UTILIDADES ──────────────────────────────────────────────────────────────
-
 function mostrarAlertaForm(mensaje, tipo) {
     const el    = document.getElementById('alert-form');
     if (!el) return;
@@ -229,7 +207,6 @@ function escapeHTML(str) {
     return String(str || '').replace(/[&<>'"]/g, t => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[t]));
 }
 
-// Para atributos onclick inline: escapar comillas simples
 function escapeAttr(str) {
     return String(str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }

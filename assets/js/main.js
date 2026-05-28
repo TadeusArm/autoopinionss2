@@ -14,7 +14,6 @@ function inicializarHeader() {
             if (!data || !data.success) throw new Error("Sesión inválida");
             const user = data.user;
 
-            // Avatar
             const nombrePic    = user.profile_pic ? user.profile_pic.split('/').pop() : null;
             const rutaAvatar   = nombrePic ? `/assets/img/avatars/${nombrePic}` : null;
             const bloqueAvatar = rutaAvatar
@@ -27,28 +26,22 @@ function inicializarHeader() {
                     <div class="user-avatar-small">${bloqueAvatar}</div>
                 </a>`;
 
-            // Botón admin — solo si es admin
-            const btnAdmin = user.role === 'admin'
-                ? `<a href="admin.html" class="nav-admin-link">Admin</a>`
-                : '';
-
-            // Modo 1: header completo (#global-header-container)
             const globalContainer = document.getElementById('global-header-container');
             if (globalContainer) {
-                const pag             = window.location.pathname.split('/').pop() || 'index.html';
-                const activeInicio    = (pag === 'index.html' || pag === '') ? 'active' : '';
-                const activeSiguiendo = pag === 'following_feed.html'        ? 'active' : '';
-                const activePublicar  = pag === 'add_vehicle.html'           ? 'active' : '';
+                const pag             = window.location.pathname.split('/').pop() || 'muro.html';
+                const activeInicio    = (pag === 'muro.html' || pag === '') ? 'active' : '';
+                const activeSiguiendo = pag === 'following_feed.html'       ? 'active' : '';
+                const activePublicar  = pag === 'add_vehicle.html'          ? 'active' : '';
                 const activeAdmin     = (pag === 'admin.html' || pag === 'admin_dashboard.html') ? 'active' : '';
 
                 globalContainer.innerHTML = `
                     <header class="nav-header">
                         <div class="header-container">
                             <div class="nav-left">
-                                <a href="index.html" class="nav-logo">AUTO OPINIONS</a>
+                                <a href="muro.html" class="nav-logo">AUTO OPINIONS</a>
                             </div>
                             <nav class="nav-links">
-                                <a href="index.html"          class="${activeInicio}">Inicio</a>
+                                <a href="muro.html"           class="${activeInicio}">Inicio</a>
                                 <a href="following_feed.html" class="${activeSiguiendo}">Siguiendo</a>
                                 <a href="add_vehicle.html"    class="${activePublicar}">Publicar</a>
                                 ${user.role === 'admin' ? `<a href="admin.html" class="nav-admin-link ${activeAdmin}">Admin</a>` : ''}
@@ -59,7 +52,6 @@ function inicializarHeader() {
                 return;
             }
 
-            // Modo 2: solo pastilla (#nav-profile-container)
             const navContainer = document.getElementById('nav-profile-container');
             if (navContainer) {
                 navContainer.innerHTML = pastillaPerfil;
@@ -76,15 +68,24 @@ function inicializarHeader() {
                     <header class="nav-header">
                         <div class="header-container">
                             <div class="nav-left">
-                                <a href="index.html" class="nav-logo">AUTO OPINIONS</a>
+                                <a href="muro.html" class="nav-logo">AUTO OPINIONS</a>
                             </div>
                             <div class="nav-right">${btnLogin}</div>
                         </div>
                     </header>`;
             }
 
+            // Redirigir a login solo desde páginas que requieren sesión
+            // index.html (home), login.html, register.html etc. NO redirigen
             const pag = window.location.pathname.split('/').pop() || 'index.html';
-            const sinRedireccion = ['login.html', 'register.html', 'comments.html', 'profile.html', 'change_password.html'];
+            const sinRedireccion = [
+                'index.html',
+                'login.html',
+                'register.html',
+                'comments.html',
+                'profile.html',
+                'change_password.html'
+            ];
             if (!sinRedireccion.some(p => pag.includes(p))) {
                 window.location.href = 'login.html';
             }

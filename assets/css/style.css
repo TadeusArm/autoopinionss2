@@ -1379,3 +1379,293 @@ td:last-child {
     background: rgba(251, 191, 36, 0.2) !important;
     color: #fbbf24 !important;
 }
+
+/* ============================================================
+   19. HOME — landing page pública
+   Añadir al final de assets/css/style.css
+   ============================================================ */
+
+body.bg-home {
+    background: url('../img/fondo-index.jpg') center/cover no-repeat fixed;
+}
+
+/* Botones del header en la home */
+.home-nav-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.home-btn-login {
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: color 0.3s;
+}
+.home-btn-login:hover { color: white; }
+
+.home-btn-register {
+    background: #3b82f6;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+.home-btn-register:hover { background: #2563eb; }
+
+/* Hero */
+.home-hero {
+    text-align: center;
+    padding: 80px 20px 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.home-hero-title {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 900;
+    margin: 0 0 20px;
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.home-hero-accent { color: #3b82f6; }
+
+.home-hero-subtitle {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+}
+
+.home-hero-btns {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.home-cta-primary {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 14px 32px;
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+    display: inline-block;
+}
+.home-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4);
+}
+
+.home-cta-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 14px 32px;
+    border-radius: 12px;
+    transition: background 0.3s;
+    backdrop-filter: blur(10px);
+    display: inline-block;
+}
+.home-cta-secondary:hover { background: rgba(255, 255, 255, 0.18); }
+
+/* Preview de coches */
+.home-preview-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    position: relative;
+    z-index: 2;
+}
+
+.home-preview-title {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.home-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.home-loading {
+    color: #94a3b8;
+    text-align: center;
+    grid-column: 1 / -1;
+}
+
+/* Tarjeta de vehículo en la home */
+.home-vehicle-card {
+    cursor: pointer;
+    background: rgba(31, 41, 55, 0.75);
+    border-radius: 18px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s;
+}
+.home-vehicle-card:hover { transform: translateY(-5px); }
+
+.home-card-img-wrapper {
+    height: 180px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.home-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.home-card-no-img {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+}
+
+.home-card-body { padding: 15px; }
+
+.home-card-title {
+    margin: 0 0 5px;
+    font-size: 1rem;
+    color: #f8fafc;
+}
+
+.home-card-meta {
+    margin: 0 0 10px;
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+.home-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.home-card-user      { color: #94a3b8; font-size: 0.8rem; }
+.home-card-rating    { color: #fbbf24; font-weight: bold; }
+.home-card-rating-max  { color: #64748b; font-size: 0.8rem; }
+.home-card-rating-none { color: #64748b; font-size: 0.8rem; }
+
+.home-card-cta {
+    margin-top: 12px;
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Bloque CTA final */
+.home-cta-block {
+    text-align: center;
+    margin-top: 50px;
+    padding: 40px;
+    background: rgba(31, 41, 55, 0.6);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.home-cta-block-title {
+    margin: 0 0 10px;
+    font-size: 1.4rem;
+    color: white;
+}
+
+.home-cta-block-sub {
+    color: #94a3b8;
+    margin: 0 0 25px;
+}
+
+@media (max-width: 600px) {
+    .home-hero { padding: 50px 20px 40px; }
+    .home-preview-grid { grid-template-columns: 1fr; }
+    .home-btn-login { display: none; }
+}
+/* ============================================================
+   20. USER BANNED — página de baneo estilo GTA
+   ============================================================ */
+
+body.bg-banned {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #000;
+    font-family: 'Helvetica', Arial, sans-serif;
+}
+
+html {
+    height: 100%;
+}
+
+.baneo-container {
+    height: 100vh;
+    width: 100vw;
+    background: url('../img/BaneoFoto.png') no-repeat center center;
+    background-size: contain;
+    display: flex;
+    position: relative;
+}
+
+.btn-volver-baneo {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    background-color: rgba(43, 88, 133, 0.9);
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 18px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    width: auto !important;
+}
+
+.btn-volver-baneo::after {
+    content: '↵';
+    display: inline-block;
+    background: white;
+    color: black;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.btn-volver-baneo:hover {
+    background-color: rgba(59, 130, 246, 1);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}

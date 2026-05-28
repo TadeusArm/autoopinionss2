@@ -1,5 +1,7 @@
+// assets/js/login.js
+
 document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById('login-form');
+    const loginForm      = document.getElementById('login-form');
     const alertContainer = document.getElementById('alert-container');
 
     if (loginForm) {
@@ -7,29 +9,28 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
 
             const loginInputVal = document.getElementById('login_input').value.trim();
-            const passwordVal = document.getElementById('password').value;
+            const passwordVal   = document.getElementById('password').value;
 
             if (!loginInputVal || !passwordVal) {
                 mostrarAlerta('Por favor, rellena todos los campos.', 'error');
                 return;
             }
 
-            // Codificación nativa de formulario para compatibilidad estricta con PHP $_POST
             const params = new URLSearchParams();
             params.append('login_input', loginInputVal);
             params.append('password', passwordVal);
 
             fetch('/backend/api/login.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: params.toString()
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = 'index.html';
+                    window.location.href = 'muro.html';
+                } else if (data.banned) {
+                    window.location.href = 'user_banned.html';
                 } else {
                     mostrarAlerta(data.message, 'error');
                 }

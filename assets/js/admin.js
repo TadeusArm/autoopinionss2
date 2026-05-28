@@ -1,24 +1,8 @@
 // assets/js/admin.js
 
 document.addEventListener("DOMContentLoaded", () => {
-    verificarAdmin();
+    cargarUsuarios();
 });
-
-async function verificarAdmin() {
-    try {
-        const res  = await fetch('/backend/api/get_session.php');
-        const data = await res.json();
-
-        if (!data.success || data.user.role !== 'admin') {
-            window.location.href = 'index.html';
-            return;
-        }
-
-        cargarUsuarios();
-    } catch {
-        window.location.href = 'index.html';
-    }
-}
 
 async function cargarUsuarios() {
     try {
@@ -26,7 +10,7 @@ async function cargarUsuarios() {
         const data = await res.json();
 
         if (!data.success) {
-            window.location.href = 'index.html';
+            window.location.href = 'muro.html';
             return;
         }
 
@@ -65,7 +49,6 @@ async function cargarUsuarios() {
 
 window.banearUsuario = async function(userId, btn) {
     const username = btn.closest('tr').querySelector('.username-cell').textContent;
-
     if (!confirm(`¿Baneamos a @${username}? Se eliminarán todos sus coches y comentarios y su correo quedará bloqueado.`)) return;
 
     btn.disabled    = true;

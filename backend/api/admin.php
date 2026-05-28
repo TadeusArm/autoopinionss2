@@ -5,7 +5,6 @@ include '../config/db.php';
 
 header('Content-Type: application/json; charset=UTF-8');
 
-// Solo admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Acceso denegado.']);
@@ -17,10 +16,9 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 
 // ─── GET: listar usuarios ────────────────────────────────────────────────────
 if ($metodo === 'GET') {
-    $stmt    = $pdo->query("SELECT id, username, email, role, profile_pic FROM users ORDER BY role ASC");
+    $stmt     = $pdo->query("SELECT id, username, email, role, profile_pic FROM users ORDER BY role ASC");
     $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Marcar cuál es la cuenta actual
     foreach ($usuarios as &$u) {
         $u['is_current'] = ($u['id'] == $mi_id);
     }
@@ -38,15 +36,14 @@ if ($metodo === 'POST') {
         exit;
     }
 
-    // No puedes banearte a ti mismo
     if ($user_id === $mi_id) {
         echo json_encode(['success' => false, 'message' => 'No puedes banearte a ti mismo.']);
         exit;
     }
 
     try {
-        // Obtener email antes de borrar
-        $st = $pdo->prepare("SELECT email FROM users WHERE id = ?");
+        // Obtener email y username antes de borrar
+        $st = $pdo->prepare("SELECT email, username FROM users WHERE id = ?");
         $st->execute([$user_id]);
         $usuario = $st->fetch(PDO::FETCH_ASSOC);
 
@@ -57,11 +54,11 @@ if ($metodo === 'POST') {
 
         $pdo->beginTransaction();
 
-        // 1. Guardar email en banned_emails
-        $ins = $pdo->prepare("INSERT IGNORE INTO banned_emails (email) VALUES (?)");
-        $ins->execute([$usuario['email']]);
+        // Guardar email Y username en banned_emails
+        $ins = $pdo->prepare("INSERT IGNORE INTO banned_emails (email, username) VALUES (?, ?)");
+        $ins->execute([$usuario['email'], $usuario['username']]);
 
-        // 2. Eliminar el usuario (ON DELETE CASCADE se encarga del resto)
+        // Eliminar el usuario
         $del = $pdo->prepare("DELETE FROM users WHERE id = ?");
         $del->execute([$user_id]);
 

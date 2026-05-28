@@ -2,74 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>AutoOpinions - Muro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoOpinions - La comunidad del motor</title>
     <link rel="icon" type="image/png" href="assets/img/favicon.jpg">
     <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        body { background: url('assets/img/fondo-index.jpg') center/cover no-repeat fixed; }
-    </style>
 </head>
-<body>
+<body class="bg-home">
     <div class="overlay"></div>
 
-    <div id="global-header-container" style="position: sticky; top: 0; z-index: 1000; min-height: 83px;"></div>
-
-    <aside class="sidebar-left">
-        <h4>Filtros Avanzados</h4>
-        <form id="filter-form">
-            <div class="filter-group">
-                <label>Buscar</label>
-                <input type="text" id="search-input" placeholder="Marca o modelo...">
+    <header class="nav-header">
+        <div class="header-container">
+            <div class="nav-left">
+                <a href="home.html" class="nav-logo">Auto Opinions</a>
             </div>
-
-            <div class="filter-group">
-                <label>Marca</label>
-                <select id="brand-select">
-                    <option value="">Todas</option>
-                </select>
+            <div class="home-nav-actions">
+                <a href="login.html" class="home-btn-login">Iniciar sesión</a>
+                <a href="register.html" class="home-btn-register">Registrarse</a>
             </div>
+        </div>
+    </header>
 
-            <div class="filter-group">
-                <label>Año (Mín - Máx)</label>
-                <div class="range-container">
-                    <select id="min-year"></select>
-                    <select id="max-year"></select>
-                </div>
-            </div>
+    <section class="home-hero">
+        <h1 class="home-hero-title">
+            La comunidad<br><span class="home-hero-accent">del motor</span>
+        </h1>
+        <p class="home-hero-subtitle">
+            Comparte tu coche, descubre los de otros, ayuda a otros y opina sobre los vehículos que más te gustan.
+        </p>
+        <div class="home-hero-btns">
+            <a href="register.html" class="home-cta-primary">Unirme gratis</a>
+            <a href="login.html" class="home-cta-secondary">Ya tengo cuenta</a>
+        </div>
+    </section>
 
-            <div class="filter-group">
-                <label>Kilómetros (Mín - Máx)</label>
-                <div class="range-container">
-                    <select id="min-km"></select>
-                    <select id="max-km"></select>
-                </div>
-            </div>
+    <section class="home-preview-section">
+        <h2 class="home-preview-title">Últimas publicaciones</h2>
+        <div id="preview-grid" class="home-preview-grid">
+            <p class="home-loading">Cargando...</p>
+        </div>
 
-            <div class="filter-group">
-                <label>Potencia (CV) (Mín - Máx)</label>
-                <div class="range-container">
-                    <select id="min-cv"></select>
-                    <select id="max-cv"></select>
-                </div>
-            </div>
+        <div class="home-cta-block">
+            <h3 class="home-cta-block-title">¿Te gusta lo que ves?</h3>
+            <p class="home-cta-block-sub">Únete para opinar, seguir a otros, ayudaros entre la comunidad y publicar tu propio coche.</p>
+            <a href="register.html" class="home-cta-primary">Crear cuenta gratis</a>
+        </div>
+    </section>
 
-            <button type="submit" class="btn-filter">ACTUALIZAR</button>
-            <a href="index.html" id="btn-clear-filters" style="display:block; text-align:center; margin-top:15px; color:#64748b; font-size:0.75rem; text-decoration:none;">Limpiar filtros</a>
-        </form>
-    </aside>
-
-    <div class="feed-container" style="position: relative; z-index: 2;">
-        <h2 style="border-left: 5px solid #3b82f6; padding-left: 15px; margin-bottom: 25px; text-shadow: 2px 2px 5px rgba(0,0,0,0.7); font-size: 1.6rem; color: #fff; margin-top: 0;">
-            Muro de la Comunidad
-        </h2>
-
-        <div id="vehicles-timeline" style="width: 100%;"></div>
-    </div>
-
-    <button type="button" id="scrollToTop" title="Ir arriba"></button>
-
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/index.js"></script>
+    <script src="assets/js/home.js"></script>
 </body>
 </html>
