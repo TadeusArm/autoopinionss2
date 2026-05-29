@@ -1,4 +1,5 @@
 // assets/js/login.js
+const API = 'https://api.autoopinions.es';
 
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm      = document.getElementById('login-form');
@@ -20,10 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
             params.append('login_input', loginInputVal);
             params.append('password', passwordVal);
 
-            fetch('/backend/api/login.php', {
+            fetch(`${API}/login.php`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: params.toString()
+                body: params.toString(),
+                credentials: 'include'
             })
             .then(response => response.json())
             .then(data => {

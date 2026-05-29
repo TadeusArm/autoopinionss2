@@ -25,7 +25,11 @@ async function publicarVehiculo() {
 
     try {
         const fd   = new FormData(form);
-        const res  = await fetch('/backend/api/add_vehicle.php', { method: 'POST', body: fd });
+        const res  = await fetch(`${API}/add_vehicle.php`, {
+            method:      'POST',
+            body:        fd,
+            credentials: 'include'
+        });
         const data = await res.json();
 
         if (data.success) {

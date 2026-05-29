@@ -1,5 +1,6 @@
 // assets/js/edit_vehicle.js
 
+
 document.addEventListener("DOMContentLoaded", () => {
     const params    = new URLSearchParams(window.location.search);
     const vehicleId = params.get('id');
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function cargarVehiculo(vehicleId) {
     try {
-        const res  = await fetch(`/backend/api/edit_vehicle.php?id=${vehicleId}`);
+        const res  = await fetch(`${API}/edit_vehicle.php?id=${vehicleId}`, { credentials: 'include' });
         const data = await res.json();
 
         if (!data.success) {
@@ -57,7 +58,11 @@ async function guardarCambios(vehicleId) {
         const fd   = new FormData(form);
         fd.append('vehicle_id', vehicleId);
 
-        const res  = await fetch('/backend/api/edit_vehicle.php', { method: 'POST', body: fd });
+        const res  = await fetch(`${API}/edit_vehicle.php`, {
+            method:      'POST',
+            body:        fd,
+            credentials: 'include'
+        });
         const data = await res.json();
 
         if (data.success) {

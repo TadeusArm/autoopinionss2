@@ -1,5 +1,6 @@
 // assets/js/following_feed.js
 
+
 document.addEventListener("DOMContentLoaded", () => {
     inicializarSelectores();
     cargarFeed();
@@ -80,7 +81,7 @@ function cargarFeed() {
 
     timeline.innerHTML = `<p class="subtitle text-center" style="margin-top:30px;">Cargando motores...</p>`;
 
-    fetch(`/backend/api/get_following_feed.php?${queryParams.toString()}`)
+    fetch(`${API}/get_following_feed.php?${queryParams.toString()}`, { credentials: 'include' })
         .then(r => {
             if (r.status === 401) { window.location.href = 'login.html'; return; }
             return r.json();
@@ -116,7 +117,7 @@ function cargarFeed() {
                     : '---';
 
                 const bloqueImagen = coche.image
-                    ? `<img src="${coche.image}" alt="Vehículo" onerror="this.src='/assets/img/default-car.jpg';">`
+                    ? `<img src="https://autoopinions.es${coche.image}" alt="Vehículo" onerror="this.src='/assets/img/default-car.jpg';">`
                     : `<div style="height:180px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.2);">Sin foto</div>`;
 
                 const botonAccion = coche.ya_opino

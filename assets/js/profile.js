@@ -1,10 +1,12 @@
+// assets/js/profile.js
+
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     let perfilId = urlParams.get('id');
 
     if (!perfilId || isNaN(perfilId)) {
         // Sin id en URL → intentar cargar el perfil propio desde sesión
-        fetch('/backend/api/get_session.php')
+        fetch(`${API}/get_session.php`, { credentials: 'include' })
             .then(r => r.json())
             .then(sess => {
                 if (sess.success && sess.user && sess.user.id) {
@@ -30,10 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function cargarPerfil(perfilId) {
     const headerContainer = document.getElementById('profile-card-header');
-    const vehiclesGrid = document.getElementById('user-vehicles-grid');
-    const garageTitle = document.getElementById('garage-title');
+    const vehiclesGrid    = document.getElementById('user-vehicles-grid');
+    const garageTitle     = document.getElementById('garage-title');
 
-    fetch(`/backend/api/get_profile.php?id=${perfilId}`)
+    fetch(`${API}/get_profile.php?id=${perfilId}`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             if (!data.success) {
@@ -57,7 +59,7 @@ function cargarPerfil(perfilId) {
 
             // 2. AVATAR
             const nombreAvatar = prof.profile_pic ? prof.profile_pic.split('/').pop() : '';
-            const rutaAvatar = nombreAvatar ? `/assets/img/avatars/${nombreAvatar}` : null;
+            const rutaAvatar   = nombreAvatar ? `/assets/img/avatars/${nombreAvatar}` : null;
 
             const bloqueAvatar = rutaAvatar
                 ? `<img src="${rutaAvatar}" alt="Avatar" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`
@@ -70,7 +72,7 @@ function cargarPerfil(perfilId) {
                    </div>`
                 : '';
 
-            // 4. INSTAGRAM 
+            // 4. INSTAGRAM
             const igHtml = prof.instagram_user
                 ? `<div style="margin-top:8px;">
                        <a href="https://instagram.com/${escapeHTML(prof.instagram_user)}" target="_blank" rel="noopener noreferrer"
@@ -97,7 +99,6 @@ function cargarPerfil(perfilId) {
                 : '';
 
             // 5. BOTÓN DE ACCIÓN
-            // Usamos 1/0 en lugar de true/false para pasar correctamente al onclick inline
             const loSigoInt = prof.lo_sigo ? 1 : 0;
             let botonAccionHeader = data.is_owner
                 ? `<a href="edit_profile.html" class="btn-editar-perfil">Configuración</a>`
@@ -129,7 +130,7 @@ function cargarPerfil(perfilId) {
                 ? `<div style="grid-column:1/-1; text-align:center; padding:40px;">Este usuario aún no ha subido ningún coche.</div>`
                 : data.garage.map(v => {
                     const nombreImg = v.image ? v.image.split('/').pop() : '';
-                    const srcCoche = nombreImg ? `/assets/img/vehicles/${nombreImg}` : '';
+                    const srcCoche  = nombreImg ? `/assets/img/vehicles/${nombreImg}` : '';
 
                     return `
                     <div style="position:relative; overflow:visible;">
@@ -167,7 +168,7 @@ window.ejecutarAccionFollow = (id, loSigoInt) => {
     const fd = new FormData();
     fd.append('followed_id', id);
     fd.append('accion', accion);
-    fetch('/backend/api/follow_action.php', { method: 'POST', body: fd })
+    fetch(`${API}/follow_action.php`, { method: 'POST', body: fd, credentials: 'include' })
         .then(r => r.json())
         .then(data => {
             if (data.success) location.reload();
@@ -181,7 +182,7 @@ window.eliminarPublicacionCoche = (e, id) => {
     if (confirm('¿Borrar publicación?')) {
         const fd = new FormData();
         fd.append('vehicle_id', id);
-        fetch('/backend/api/delete_vehicle.php', { method: 'POST', body: fd })
+        fetch(`${API}/delete_vehicle.php`, { method: 'POST', body: fd, credentials: 'include' })
             .then(() => location.reload());
     }
 };

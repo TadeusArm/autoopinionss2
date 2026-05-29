@@ -1,3 +1,6 @@
+// assets/js/edit_profile.js
+
+
 document.addEventListener("DOMContentLoaded", () => {
     cargarDatosPerfil();
     iniciarPreviewAvatar();
@@ -8,10 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // --- 1. CARGA LOS DATOS ACTUALES DEL USUARIO ---
 async function cargarDatosPerfil() {
     try {
-        const res  = await fetch("/backend/api/get_session.php");
+        const res  = await fetch(`${API}/get_session.php`, { credentials: 'include' });
         const data = await res.json();
  
-        // get_session.php devuelve { success: true, user: { id, username, profile_pic, role } }
         if (!data.success || !data.user) {
             window.location.href = "login.html";
             return;
@@ -58,7 +60,7 @@ async function cargarDatosPerfil() {
 // --- 2. CARGA BIO, LOCATION E INSTAGRAM DESDE LA BD ---
 async function cargarDatosExtendidos(userId) {
     try {
-        const res  = await fetch(`/backend/api/get_profile.php?id=${userId}`);
+        const res  = await fetch(`${API}/get_profile.php?id=${userId}`, { credentials: 'include' });
         const data = await res.json();
  
         if (!data.success) return;
@@ -110,9 +112,10 @@ async function guardarPerfil(evt) {
  
     try {
         const formData = new FormData(evt.target);
-        const res      = await fetch("/backend/api/edit_profile.php", {
-            method: "POST",
-            body:   formData,
+        const res      = await fetch(`${API}/edit_profile.php`, {
+            method:      "POST",
+            body:        formData,
+            credentials: 'include'
         });
         const data = await res.json();
  
@@ -131,7 +134,7 @@ async function guardarPerfil(evt) {
 async function cerrarSesion(evt) {
     evt.preventDefault();
     try {
-        await fetch("/backend/api/logout.php", { method: "POST" });
+        await fetch(`${API}/logout.php`, { method: "POST", credentials: 'include' });
     } catch (err) {
         console.error("Error al cerrar sesión:", err);
     }

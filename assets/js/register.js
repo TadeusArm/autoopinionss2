@@ -1,5 +1,8 @@
+// assets/js/register.js
+const API = 'https://api.autoopinions.es';
+
 document.addEventListener("DOMContentLoaded", () => {
-    const registerForm = document.getElementById('register-form');
+    const registerForm   = document.getElementById('register-form');
     const alertContainer = document.getElementById('alert-container');
 
     if (registerForm) {
@@ -9,9 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(registerForm);
 
             try {
-                const response = await fetch('/backend/api/register.php', {
+                const response = await fetch(`${API}/register.php`, {
                     method: 'POST',
-                    body: formData // FormData es más limpio y evita problemas con Content-Type
+                    body: formData,
+                    credentials: 'include'
                 });
 
                 // Si la respuesta no es OK, leemos el texto crudo para debugear

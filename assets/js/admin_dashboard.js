@@ -1,12 +1,13 @@
 // assets/js/admin_dashboard.js
 
+
 document.addEventListener("DOMContentLoaded", () => {
     verificarAdmin();
 });
 
 async function verificarAdmin() {
     try {
-        const res  = await fetch('/backend/api/get_session.php');
+        const res  = await fetch(`${API}/get_session.php`, { credentials: 'include' });
         const data = await res.json();
 
         if (!data.success || data.user.role !== 'admin') {
@@ -22,7 +23,7 @@ async function verificarAdmin() {
 
 async function cargarDashboard() {
     try {
-        const res  = await fetch('/backend/api/admin_dashboard.php');
+        const res  = await fetch(`${API}/admin_dashboard.php`, { credentials: 'include' });
         const data = await res.json();
 
         if (!data.success) {

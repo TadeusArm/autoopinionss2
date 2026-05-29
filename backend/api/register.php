@@ -1,11 +1,19 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-session_start();
-include '../config/db.php';
-include '../includes/functions_mail.php';
+session_start([
+    'cookie_samesite' => 'None',
+    'cookie_secure'   => true,
+]);
+include 'include '../config/db.php';';
+include 'includes/functions_mail.php';
 
+header("Access-Control-Allow-Origin: https://autoopinions.es");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type");
 header('Content-Type: application/json; charset=UTF-8');
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(200); exit; }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username     = trim($_POST['username'] ?? '');
@@ -18,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     try {
-        // 1. Comprobar si el email está baneado
         $ban = $pdo->prepare("SELECT id FROM banned_emails WHERE email = ?");
         $ban->execute([$email]);
         if ($ban->fetch()) {
@@ -26,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        // 2. Comprobar si el usuario o email ya existen
         $check = $pdo->prepare("SELECT id FROM users WHERE email = ? OR username = ?");
         $check->execute([$email, $username]);
         if ($check->fetch()) {
@@ -34,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        // 3. Crear cuenta
         $password = password_hash($password_raw, PASSWORD_DEFAULT);
         $token    = bin2hex(random_bytes(16));
 
@@ -47,7 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo json_encode(['success' => false, 'message' => 'Cuenta creada, pero falló el envío de email.']);
             }
         }
-
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Error de BD: ' . $e->getMessage()]);
     }

@@ -1,7 +1,8 @@
 // assets/js/home.js
 
+
 // Si el usuario ya tiene sesión, redirigir al muro
-fetch('/backend/api/get_session.php')
+fetch(`${API}/get_session.php`, { credentials: 'include' })
     .then(r => r.json())
     .then(data => {
         if (data.success) window.location.href = 'muro.html';
@@ -16,7 +17,7 @@ async function cargarPreview() {
     const grid = document.getElementById('preview-grid');
 
     try {
-        const res  = await fetch('/backend/api/get_public_vehicles.php');
+        const res  = await fetch(`${API}/get_public_vehicles.php`, { credentials: 'include' });
         const data = await res.json();
 
         if (!data.success || !data.vehicles.length) {
@@ -26,7 +27,7 @@ async function cargarPreview() {
 
         grid.innerHTML = data.vehicles.map(v => {
             const img = v.image
-                ? `<img src="${v.image}" alt="${escapeHTML(v.brand)} ${escapeHTML(v.model)}" class="home-card-img">`
+                ? `<img src="https://autoopinions.es${v.image}" alt="${escapeHTML(v.brand)} ${escapeHTML(v.model)}" class="home-card-img">`
                 : `<div class="home-card-no-img">Sin foto</div>`;
 
             const estrellas = v.nota_media

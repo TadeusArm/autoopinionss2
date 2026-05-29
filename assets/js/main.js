@@ -1,11 +1,12 @@
 // assets/js/main.js
+const API = 'https://api.autoopinions.es';
 
 document.addEventListener("DOMContentLoaded", () => {
     inicializarHeader();
 });
 
 function inicializarHeader() {
-    fetch('/backend/api/get_session.php')
+    fetch(`${API}/get_session.php`, { credentials: 'include' })
         .then(r => {
             if (r.status === 401 || !r.ok) throw new Error("Sin sesión");
             return r.json();
@@ -84,7 +85,9 @@ function inicializarHeader() {
                 'register.html',
                 'comments.html',
                 'profile.html',
-                'change_password.html'
+                'change_password.html',
+                'admin.html',
+                'admin_dashboard.html'
             ];
             if (!sinRedireccion.some(p => pag.includes(p))) {
                 window.location.href = 'login.html';

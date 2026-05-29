@@ -2,7 +2,11 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require $_SERVER['DOCUMENT_ROOT'] . '/backend/vendor/autoload.php';
+$autoload = dirname(__DIR__) . '/vendor/autoload.php';
+if (file_exists($autoload)) {
+    require_once $autoload;
+    require_once dirname(__DIR__) . '/includes/functions_mail.php';
+}
 
 /**
  * Función única para envíos de email

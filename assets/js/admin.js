@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function cargarUsuarios() {
     try {
-        const res  = await fetch('/backend/api/admin.php');
+        const res  = await fetch(`${API}/admin.php`, { credentials: 'include' });
         const data = await res.json();
 
         if (!data.success) {
@@ -58,7 +58,7 @@ window.banearUsuario = async function(userId, btn) {
         const fd = new FormData();
         fd.append('user_id', userId);
 
-        const res  = await fetch('/backend/api/admin.php', { method: 'POST', body: fd });
+        const res  = await fetch(`${API}/admin.php`, { method: 'POST', body: fd, credentials: 'include' });
         const data = await res.json();
 
         if (data.success) {

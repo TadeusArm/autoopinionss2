@@ -1,3 +1,6 @@
+// assets/js/change_password.js
+
+
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-submit").addEventListener("click", cambiarPassword);
 });
@@ -23,13 +26,17 @@ async function cambiarPassword() {
         formData.append("current_password", currentPass);
         formData.append("new_password", newPass);
 
-        const res  = await fetch("/backend/api/change_password.php", { method: "POST", body: formData });
+        const res  = await fetch(`${API}/change_password.php`, {
+            method:      "POST",
+            body:        formData,
+            credentials: 'include'
+        });
         const data = await res.json();
 
         if (data.success) {
             mostrarAlerta(data.message, "success");
             document.getElementById("current_password").value = "";
-            document.getElementById("new_password").value = "";
+            document.getElementById("new_password").value     = "";
         } else {
             mostrarAlerta(data.message, "error");
         }
@@ -41,8 +48,8 @@ async function cambiarPassword() {
 
 function mostrarAlerta(mensaje, tipo) {
     const container = document.getElementById("alert-container");
-    const clase = tipo === "success" ? "alert-success"
-                : tipo === "error"   ? "alert-error"
-                : "alert-info";
+    const clase     = tipo === "success" ? "alert-success"
+                    : tipo === "error"   ? "alert-error"
+                    : "alert-info";
     container.innerHTML = `<div class="alert ${clase}">${mensaje}</div>`;
 }

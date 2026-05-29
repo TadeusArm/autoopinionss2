@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function cargarPagina(vehicleId) {
     try {
-        const res  = await fetch(`/backend/api/comments.php?vehicle_id=${vehicleId}`);
+        const res  = await fetch(`${API}/comments.php?vehicle_id=${vehicleId}`, { credentials: 'include' });
         const data = await res.json();
 
         if (!data.success) {
@@ -42,9 +42,13 @@ async function cargarPagina(vehicleId) {
 }
 
 function renderCocheInfo(coche) {
-    const srcImg = coche.image
-        ? `<a href="${coche.image}" target="_blank">
-               <img src="${coche.image}" class="img-preview" alt="Coche">
+    if (!coche) return;
+    const imgSrc = (coche.image && coche.image !== '')
+        ? `https://autoopinions.es${coche.image}`
+        : null;
+    const srcImg = imgSrc
+        ? `<a href="${imgSrc}" target="_blank">
+               <img src="${imgSrc}" class="img-preview" alt="Coche">
            </a>`
         : `<img src="assets/img/no-foto.webp" class="img-preview" alt="Sin foto">`;
 
@@ -52,8 +56,8 @@ function renderCocheInfo(coche) {
         <div class="coche-preview-header">
             ${srcImg}
             <div>
-                <h2 style="margin:0; color:#60a5fa;">${escapeHTML(coche.brand + ' ' + coche.model)}</h2>
-                <p style="color:#9ca3af; margin:5px 0;">Publicado por: <b>@${escapeHTML(coche.username)}</b></p>
+                <h2 style="margin:0; color:#60a5fa;">${escapeHTML((coche.brand || '') + ' ' + (coche.model || ''))}</h2>
+                <p style="color:#9ca3af; margin:5px 0;">Publicado por: <b>@${escapeHTML(coche.username || '')}</b></p>
             </div>
         </div>`;
 }
@@ -144,7 +148,7 @@ async function enviarOpinion(vehicleId) {
         fd.append('nota', nota);
         fd.append('comentario', comentario);
 
-        const res  = await fetch('/backend/api/comments.php', { method: 'POST', body: fd });
+        const res  = await fetch(`${API}/comments.php`, { method: 'POST', body: fd, credentials: 'include' });
         const data = await res.json();
 
         if (data.success) {
@@ -168,7 +172,7 @@ async function enviarRespuesta(parentId, vehicleId) {
         fd.append('comentario', comentario);
         fd.append('parent_id', parentId);
 
-        const res  = await fetch('/backend/api/comments.php', { method: 'POST', body: fd });
+        const res  = await fetch(`${API}/comments.php`, { method: 'POST', body: fd, credentials: 'include' });
         const data = await res.json();
 
         if (data.success) {

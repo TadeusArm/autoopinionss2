@@ -1669,3 +1669,81 @@ html {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
+
+/* ============================================================
+   15. RESPONSIVE — móviles (max 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+
+    #global-header-container {
+        position: relative !important;
+    }
+
+    /* Mostrar todos los enlaces pero más compactos */
+    .nav-links {
+        display: flex !important;
+        gap: 4px;
+        flex-wrap: nowrap;
+    }
+
+    .nav-links a {
+        display: block !important;
+        padding: 6px 8px !important;
+        font-size: 0.72rem !important;
+        border-radius: 8px;
+        white-space: nowrap;
+        color: #94a3b8;
+    }
+
+    /* Botón Publicar destacado en azul */
+    .nav-links a:nth-child(3) {
+        background: #3b82f6;
+        color: white !important;
+        font-weight: bold;
+    }
+
+    /* Botón Admin mantiene su estilo dorado */
+    .nav-admin-link {
+        font-size: 0.72rem !important;
+        padding: 6px 8px !important;
+    }
+
+    /* Ocultar nombre de usuario, solo avatar */
+    .user-pill-name { display: none; }
+
+    .header-container { padding: 0 10px; }
+
+    /* Sidebar pasa a ser un bloque normal */
+    .sidebar-left {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        padding-top: 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Feed sin margen izquierdo */
+    .feed-container {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 15px !important;
+        margin-top: 20px !important;
+    }
+
+    .range-container   { grid-template-columns: 1fr; }
+    .img-wrapper       { height: 220px; }
+    .search-form       { flex-direction: column; }
+    .search-box, .filter-box, .btn-search { width: 100%; }
+}
+
+/* Pantallas muy pequeñas — reducir aún más el texto */
+@media (max-width: 400px) {
+    .nav-links a {
+        font-size: 0.65rem !important;
+        padding: 5px 6px !important;
+    }
+    .nav-logo {
+        font-size: 0.9rem !important;
+    }
+}
